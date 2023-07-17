@@ -1,6 +1,6 @@
 use sfml::graphics::{RenderWindow, RenderTarget, CircleShape, Transformable, Shape, Color};
 use sfml::window::{ContextSettings, Style, Event};
-use sfml::system::{Vector2f};
+use sfml::system::Vector2f;
 
 fn main() {
     let mut window = RenderWindow::new(
