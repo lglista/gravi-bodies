@@ -1,13 +1,18 @@
 mod body;
+mod command_line_flags;
 
-use std::vec;
-
-use sfml::graphics::{RenderWindow, RenderTarget, CircleShape, Transformable, Shape, Color};
+use sfml::graphics::{RenderWindow, RenderTarget, Transformable, Color};
 use sfml::window::{ContextSettings, Style, Event};
 use sfml::system::Vector2f;
 use crate::body::*;
+use crate::command_line_flags::*;
+
+use std::env;
 
 fn main() {
+    let args: Vec<String> = env::args().collect();
+    let flags = get_command_line_flags(args);
+
     let mut window = RenderWindow::new(
         (1200, 800),
         "TEST",
@@ -17,13 +22,8 @@ fn main() {
 
     window.set_framerate_limit(60);
 
-    let mut circle_vec = vec![CircleShape::new(10f32, 10), CircleShape::new(10f32, 10)];
-    let mut body_vec = vec![Body::new(Vector2f::new(0.0,0.0), 100.0, BodyType::NEUTRAL), Body::new(Vector2f::new(0.0,0.0), 100.0, BodyType::NEUTRAL)];
-
-    circle_vec[0].set_position(Vector2f::new(400.0, 100.0));
-    circle_vec[0].set_fill_color(Color::rgb(0,0,255));
-    circle_vec[1].set_position(Vector2f::new(200.0, 100.0));
-    circle_vec[1].set_fill_color(Color::rgb(255,0,0));
+    let mut circle_vec = read_file_and_make_circles("scenarios/float_away.circles");
+    let mut body_vec = read_file_and_make_bodies("scenarios/float_away.bodies");
 
     while window.is_open() {
         while let Some(event) =  window.poll_event() {
