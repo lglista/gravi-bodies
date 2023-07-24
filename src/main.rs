@@ -1,7 +1,7 @@
 mod body;
 mod command_line_flags;
 
-use sfml::graphics::{RenderWindow, RenderTarget, Transformable, Color};
+use sfml::graphics::{RenderWindow, RenderTarget, Transformable, Color, CircleShape, Shape};
 use sfml::window::{ContextSettings, Style, Event};
 use sfml::system::Vector2f;
 use crate::body::*;
@@ -15,15 +15,16 @@ fn main() {
 
     let mut window = RenderWindow::new(
         (1200, 800),
-        "TEST",
+        "gravi-bodies",
         Style::CLOSE,
         &ContextSettings::default()
     );
 
     window.set_framerate_limit(60);
 
-    let mut circle_vec = read_file_and_make_circles("scenarios/float_away.circles");
-    let mut body_vec = read_file_and_make_bodies("scenarios/float_away.bodies");
+    let mut circle_vec = read_file_and_make_circles("scenarios/stable_1.circles");
+    let mut body_vec = read_file_and_make_bodies("scenarios/stable_1.bodies");
+    let mut lines_vec = Vec::new();
 
     while window.is_open() {
         while let Some(event) =  window.poll_event() {
@@ -48,6 +49,16 @@ fn main() {
             }
             circle_vec[i].move_(body_vec[i].velocity);
             window.draw(&circle_vec[i]);
+            if flags[0] {
+                let mut circle = CircleShape::new(1.0, 10);
+                let color = circle_vec[i].fill_color();
+                circle.set_fill_color(Color::rgb(color.r, color.g, color.b));
+                circle.set_position(Vector2f::new(circle_vec[i].position().x, circle_vec[i].position().y));
+                lines_vec.push(circle);
+                for line in lines_vec.iter() {
+                    window.draw(line);
+                }
+            }
             i += 1;
         }
 
