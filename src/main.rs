@@ -11,7 +11,8 @@ use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let flags = get_command_line_flags(args);
+    let flags = get_command_line_flags(args.clone());
+    let scenario_name = args[1].to_string();
 
     let mut window = RenderWindow::new(
         (1200, 800),
@@ -22,8 +23,10 @@ fn main() {
 
     window.set_framerate_limit(60);
 
-    let mut circle_vec = read_file_and_make_circles("scenarios/stable_1.circles");
-    let mut body_vec = read_file_and_make_bodies("scenarios/stable_1.bodies");
+    let circle_binding = "scenarios/".to_owned() + &scenario_name + ".circles";
+    let body_binding = "scenarios/".to_owned() + &scenario_name + ".bodies";
+    let mut circle_vec = read_file_and_make_circles(&circle_binding);
+    let mut body_vec = read_file_and_make_bodies(&body_binding);
     let mut lines_vec = Vec::new();
 
     while window.is_open() {
