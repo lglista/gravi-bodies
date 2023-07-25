@@ -1,7 +1,7 @@
 mod body;
 mod command_line_flags;
 
-use sfml::graphics::{RenderWindow, RenderTarget, Transformable, Color, CircleShape, Shape};
+use sfml::graphics::{RenderWindow, RenderTarget, Transformable, Color, CircleShape, Shape, Texture};
 use sfml::window::{ContextSettings, Style, Event};
 use sfml::system::Vector2f;
 use crate::body::*;
@@ -32,7 +32,14 @@ fn main() {
     while window.is_open() {
         while let Some(event) =  window.poll_event() {
             match event {
-                Event::Closed => window.close(), _ => {}
+                Event::Closed => {
+                    let mut texture = Texture::new().expect("Texture was not formed properly");
+                    let _ = texture.create(window.size().x, window.size().y);
+                    unsafe {texture.update_from_render_window(&window, 0, 0);}
+                    let screenshot_name_binding = "screenshots/".to_owned() + &scenario_name + ".png";
+                    let _ = texture.copy_to_image().expect("Image was not able to be copied").save_to_file(&screenshot_name_binding);
+                    window.close()
+                }, _ => {}
             }
         }
         window.clear(Color::rgb(0,0,0));
@@ -52,7 +59,7 @@ fn main() {
             }
             circle_vec[i].move_(body_vec[i].velocity);
             window.draw(&circle_vec[i]);
-            if flags[0] {
+            if flags[0] { // Flags::DrawLines
                 let mut circle = CircleShape::new(1.0, 10);
                 let color = circle_vec[i].fill_color();
                 circle.set_fill_color(Color::rgb(color.r, color.g, color.b));
