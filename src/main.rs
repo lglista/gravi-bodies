@@ -27,7 +27,11 @@ fn main() {
     let body_binding = "scenarios/".to_owned() + &scenario_name + ".bodies";
     let mut circle_vec = read_file_and_make_circles(&circle_binding);
     let mut body_vec = read_file_and_make_bodies(&body_binding);
-    let mut lines_vec = Vec::new();
+
+    let total_points = flags[Flags::DrawTrails as usize] * body_vec.len();
+    let mut lines_vec = Vec::with_capacity(total_points);
+    lines_vec.resize(total_points, CircleShape::new(0.0, 0));
+    let mut current_point: usize = 0;
 
     while window.is_open() {
         while let Some(event) =  window.poll_event() {
@@ -59,15 +63,17 @@ fn main() {
             }
             circle_vec[i].move_(body_vec[i].velocity);
             window.draw(&circle_vec[i]);
-            if flags[Flags::DrawLines as usize] { // Flags::DrawLines
+            if flags[Flags::DrawTrails as usize] != 0 {
                 let mut circle = CircleShape::new(1.0, 10);
                 let color = circle_vec[i].fill_color();
                 circle.set_fill_color(Color::rgb(color.r, color.g, color.b));
                 circle.set_position(Vector2f::new(circle_vec[i].position().x, circle_vec[i].position().y));
-                lines_vec.push(circle);
+                lines_vec[current_point] = circle;
                 for line in lines_vec.iter() {
                     window.draw(line);
                 }
+                current_point += 1;
+                if current_point == total_points {current_point = 0;}
             }
             i += 1;
         }
