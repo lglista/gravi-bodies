@@ -1,6 +1,19 @@
+use std::convert::TryFrom;
+
 #[derive(Copy, Clone)]
 pub enum Flags {
-    DrawLines
+    DrawLines = 0
+}
+
+impl TryFrom<usize> for Flags {
+    type Error = ();
+
+    fn try_from(v: usize) -> Result<Self, Self::Error> {
+        match v {
+            x if x == Flags::DrawLines as usize => Ok(Flags::DrawLines),
+            _ => Err(()),
+        }
+    }
 }
 
 pub fn get_command_line_flags(args: Vec<String>) -> Vec<bool> {

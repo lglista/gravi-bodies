@@ -120,7 +120,7 @@ pub fn read_file_and_make_bodies(filename: &str) -> Vec<Body> {
             line = lines.next();
             continue;
         }
-        let body_type: BodyType = BodyType::from_str(first_value.expect("BodyType not found")).unwrap();
+        let body_type: BodyType = BodyType::from_str(first_value.expect("Uknown BodyType found in input file")).unwrap();
         let mass: f32 = values.next().expect("Mass not found").parse().unwrap();
         let x_velocity: f32 = values.next().expect("X Velocity not found").parse().unwrap();
         let y_velocity: f32 = values.next().expect("Y Velocity not found").parse().unwrap();

@@ -59,7 +59,7 @@ fn main() {
             }
             circle_vec[i].move_(body_vec[i].velocity);
             window.draw(&circle_vec[i]);
-            if flags[0] { // Flags::DrawLines
+            if flags[Flags::DrawLines as usize] { // Flags::DrawLines
                 let mut circle = CircleShape::new(1.0, 10);
                 let color = circle_vec[i].fill_color();
                 circle.set_fill_color(Color::rgb(color.r, color.g, color.b));
