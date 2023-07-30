@@ -68,4 +68,5 @@ ex. `-d=200` to draw the trail for the most recent 200 frames per body
 `cargo run -- stable_2 -d=200`
 
 Not very stable, but very cool
-![stable_2](https://github.com/lglista/gravi-bodies/assets/32312607/dd9ccaa1-6580-49bd-aea3-63b7a8697109)
+![stable_2](https://github.com/lglista/gravi-bodies/assets/32312607/521669f9-2e8c-4ffe-a5a6-361293a715e2)
+
