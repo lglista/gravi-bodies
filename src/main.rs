@@ -40,7 +40,7 @@ fn main() {
                     let mut texture = Texture::new().expect("Texture was not formed properly");
                     let _ = texture.create(window.size().x, window.size().y);
                     unsafe {texture.update_from_render_window(&window, 0, 0);}
-                    let screenshot_name_binding = "screenshots/".to_owned() + &scenario_name + ".png";
+                    let screenshot_name_binding = scenario_name.clone() + ".png";
                     let _ = texture.copy_to_image().expect("Image was not able to be copied").save_to_file(&screenshot_name_binding);
                     window.close()
                 }, _ => {}
