@@ -1,4 +1,0 @@
-# BodyType | mass | x_veloctiy | y_velocity
-NEUTRAL     250.0      0.0          1
-NEUTRAL     250.0      0.0         -1
-NEUTRAL     250.0      0.5          1

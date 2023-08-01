@@ -1,0 +1,3 @@
+# BodyType | mass | x_postiion | y_position | x_veloctiy | y_velocity | radius | r | g | b 
+NEUTRAL     250.0      550.0       400.0        0.0            1         10      0   0   255
+NEUTRAL     250.0      650.0       400.0        0.0           -1         10     255  0   0
